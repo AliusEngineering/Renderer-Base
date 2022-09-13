@@ -20,9 +20,12 @@ namespace Alius {
         // ...
 
         virtual void EndFrame();
+
     };
 
+    using RendererModuleCreator = std::function<std::unique_ptr<Renderer>()>;
+
     // Append your custom renderer module here with key being any string you would like to name your module.
-    std::unordered_map<std::string, std::function<std::unique_ptr<Renderer>()>> s_RendererModules;
+    extern std::unordered_map <std::string, RendererModuleCreator> s_RendererModules;
 
 }
