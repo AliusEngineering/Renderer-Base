@@ -14,6 +14,7 @@ functions to instantiate and retrieve your renderer implementation (return value
 
 Renderer Base has methods that are purely virtual and are required to be implemented. Those are:
 
+- `Init()` - initialize renderer and all its dependencies, such as windowing system
 - `BeginFrame()` - which is for passing scene metadata, such as cameras and so on.
 - `DrawDraw(uint32_t vertexCount, uint32_t firstVertex, uint32_t instanceCount = 1, uint32_t firstInstance = 0)` - which
   is for drawing certain amount of vertices and their instances, as well as to start from a specific one (first
