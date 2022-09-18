@@ -14,9 +14,6 @@ namespace Alius {
     public:
         virtual ~Renderer() = default;
 
-        // Initialize renderer infrastructure, such as windowing system
-        virtual void Init() = 0;
-
         virtual void BeginFrame(/* all the possible parameters: cameras, scene metadata, etc. */) = 0;
 
         virtual void
