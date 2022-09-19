@@ -1,0 +1,4 @@
+[submodule "Dependencies/Window-Base"]
+	path = Dependencies/Window-Base
+	url = https://github.com/AliusEngineering/Window-Base
+	branch = master

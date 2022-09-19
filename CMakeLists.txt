@@ -9,6 +9,12 @@ message(STATUS "[RendererBase] Sources are: ${RendererBaseHeaders}")
 
 add_library(RendererBase INTERFACE)
 
+add_subdirectory("Dependencies/Window-Base")
+
+target_link_libraries(RendererBase INTERFACE
+        WindowBase
+        )
+
 target_sources(RendererBase INTERFACE
         FILE_SET HEADERS
         FILES
