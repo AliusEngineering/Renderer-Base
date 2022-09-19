@@ -7,7 +7,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 file(GLOB_RECURSE RendererBaseHeaders CONFIGURE_DEPENDS "RendererBase/**")
 message(STATUS "[RendererBase] Sources are: ${RendererBaseHeaders}")
 
-add_library(RendererBase INTERFACE)
+if (NOT TARGET RendererBase)
+    add_library(RendererBase INTERFACE)
+endif ()
 
 add_subdirectory("Dependencies/Window-Base")
 
