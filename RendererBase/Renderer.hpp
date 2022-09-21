@@ -27,19 +27,18 @@ namespace Alius {
 
         virtual void EndFrame() = 0;
 
+        /**
+         * Append your module to this map for it to be recognizable by Alius at runtime.
+         * @tparam key Your module identifier.
+         * @tparam value Function that returns a shared_ptr of your module. (return type
+         * should be shared_ptr<Renderer>). Is of type std::function<std::shared_ptr<Renderer>(size_t, size_t, const char*)>.
+         * Should accept size_t width, size_t height and const char* title for underlying window creation.
+         */
+        inline static std::unordered_map<std::string, std::function<
+        std::shared_ptr<Renderer>(size_t, size_t,
+        const char*)>> s_RendererModules{};
+
     };
 
-    using RendererModuleCreator = std::function<
-    std::shared_ptr<Renderer>(size_t, size_t,
-    const char*)>;
-
-    /**
-     * Append your module to this map for it to be recognizable by Alius at runtime.
-     * @tparam key Your module identifier.
-     * @tparam value Function that returns a shared_ptr of your module. (return type
-     * should be shared_ptr<Renderer>). Is of type std::function<std::shared_ptr<Renderer>(size_t, size_t, const char*)>.
-     * Should accept size_t width, size_t height and const char* title for underlying window creation.
-     */
-    std::unordered_map <std::string, RendererModuleCreator> s_RendererModules{};
 
 }
