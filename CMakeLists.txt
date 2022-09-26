@@ -4,21 +4,18 @@ project(RendererBase)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
-file(GLOB_RECURSE RendererBaseHeaders CONFIGURE_DEPENDS "RendererBase/**")
-message(STATUS "[RendererBase] Sources are: ${RendererBaseHeaders}")
+file(GLOB_RECURSE RendererBaseSources CONFIGURE_DEPENDS "RendererBase/**")
+message(STATUS "[RendererBase] Sources are: ${RendererBaseSources}")
 
 if (NOT TARGET RendererBase)
-    add_library(RendererBase INTERFACE)
+    add_library(RendererBase STATIC ${RendererBaseSources})
 endif ()
 
-add_subdirectory("Dependencies/Window-Base")
+target_precompile_headers(RendererBase PUBLIC "RendererBase/RendererBasePch.hpp")
 
-target_link_libraries(RendererBase INTERFACE
-        WindowBase
-        )
+target_include_directories(RendererBase PUBLIC "WindowBase")
 
-target_sources(RendererBase INTERFACE
-        FILE_SET HEADERS
-        FILES
-        ${RendererBaseHeaders}
-        )
+add_subdirectory("3rd-party/glm")
+target_link_libraries(RendererBase PUBLIC glm::glm)
+
+target_link_libraries(RendererBase INTERFACE WindowBase)

@@ -1,4 +1,4 @@
-[submodule "Dependencies/Window-Base"]
-	path = Dependencies/Window-Base
-	url = https://github.com/AliusEngineering/Window-Base
+[submodule "3rd-party/glm"]
+	path = 3rd-party/glm
+	url = https://github.com/g-truc/glm.git
 	branch = master
