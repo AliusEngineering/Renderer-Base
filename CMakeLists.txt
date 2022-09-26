@@ -17,5 +17,3 @@ target_include_directories(RendererBase PUBLIC "WindowBase")
 
 add_subdirectory("3rd-party/glm")
 target_link_libraries(RendererBase PUBLIC glm::glm)
-
-target_link_libraries(RendererBase INTERFACE WindowBase)
