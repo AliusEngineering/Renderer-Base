@@ -2,7 +2,7 @@
 
 #include "Window.hpp"
 
-#include "RendererObjects.hpp"
+#include "RendererBase/Objects/RendererObjects.hpp"
 
 #include "cstdint"
 
@@ -11,3 +11,6 @@
 #include "unordered_map"
 
 #include "memory"
+
+template<class C>
+using Ref = std::shared_ptr<C>;

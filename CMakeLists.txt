@@ -11,7 +11,7 @@ if (NOT TARGET RendererBase)
     add_library(RendererBase STATIC ${RendererBaseSources})
 endif ()
 
-target_precompile_headers(RendererBase PUBLIC "RendererBase/RendererBasePch.hpp")
+target_precompile_headers(RendererBase PUBLIC "RendererBasePch.hpp")
 
 target_include_directories(RendererBase PUBLIC "WindowBase")
 

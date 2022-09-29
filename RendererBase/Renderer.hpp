@@ -9,20 +9,25 @@ class Renderer
 public:
   virtual ~Renderer() = default;
 
-  virtual std::shared_ptr<Window> GetWindow() const = 0;
+  virtual Ref<Window> GetWindow() const = 0;
 
-  virtual void BeginFrame(
-    /* all the possible parameters: cameras, scene metadata, etc. */) = 0;
+  template<class ObjT, class ObjDataT>
+  Ref<ObjT> CreateObject(const ObjDataT& objectData)
+  {
+    auto newObj = std::make_shared<ObjT>(objectData);
+    CreateObjectImpl(newObj);
+    return newObj;
+  }
 
-  // This overload only exists for backwards compatibility. It will be removed
-  // soon.
-  virtual void Draw(uint32_t vertexCount,
-                    uint32_t firstVertex,
-                    uint32_t instanceCount,
-                    uint32_t firstInstance) = 0;
+  template<class ObjT>
+  bool DestroyObject(Ref<ObjT> obj)
+  {
+    DestroyObjectImpl(obj);
+  }
 
-  virtual void Draw(const Triangle& triangle) = 0;
-  virtual void Draw(const Quad& quad) = 0;
+  virtual void BeginFrame(/* cameras, scene metadata, etc. */) = 0;
+
+  virtual void Draw(Ref<RendererObjectBase> object) = 0;
 
   virtual void EndFrame() = 0;
 
@@ -38,8 +43,19 @@ public:
    */
   inline static std::unordered_map<
     std::string,
-    std::function<std::shared_ptr<Renderer>(size_t, size_t, const char*)>>
+    std::function<Ref<Renderer>(size_t, size_t, const char*)>>
     s_RendererModules{};
+
+private:
+  /*
+   * Templated method implementation. On Renderer object creation you would
+   * probably want to load vertex/index data to the GPU and somehow synchronize
+   * object creation with your Renderer implementation pipeline: this is what
+   * this method is for.
+   */
+  virtual void CreateObjectImpl(Ref<RendererObjectBase> object) = 0;
+
+  virtual void DestroyObjectImpl(Ref<RendererObjectBase> object) = 0;
 };
 
 }
