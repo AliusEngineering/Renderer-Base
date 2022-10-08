@@ -7,6 +7,23 @@ namespace Alius {
 class Renderer
 {
 public:
+  struct ModuleSpec
+  {
+    // Returns new module on demand
+    std::function<Ref<Renderer>(size_t, size_t, const char*)> Creator;
+
+    // Static assets are only accessed during initialization (program startup)
+    // and are not required during the following runtime
+    std::string StaticAssetLocation;
+
+    // Dynamic assets may be accessed through the whole program lifetime, so
+    // their location should not change from startup until shutdown.
+    std::string DynamicAssetLocation;
+
+    // WIP: Reserved for the future use when we add dynamic module loading
+    std::string DynLibName;
+  };
+
   virtual ~Renderer() = default;
 
   virtual Ref<Window> GetWindow() const = 0;
@@ -41,10 +58,7 @@ public:
    * Should accept size_t width, size_t height and const char* title for
    * underlying window creation.
    */
-  inline static std::unordered_map<
-    std::string,
-    std::function<Ref<Renderer>(size_t, size_t, const char*)>>
-    s_RendererModules{};
+  inline static std::unordered_map<std::string, ModuleSpec> s_RendererModules{};
 
 private:
   /*
