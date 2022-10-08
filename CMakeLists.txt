@@ -15,5 +15,8 @@ target_precompile_headers(RendererBase PUBLIC "RendererBasePch.hpp")
 
 target_include_directories(RendererBase PUBLIC "WindowBase")
 
-add_subdirectory("3rd-party/glm")
+if (NOT TARGET glm::glm)
+    add_subdirectory("3rd-party/glm")
+endif ()
+
 target_link_libraries(RendererBase PUBLIC glm::glm)
