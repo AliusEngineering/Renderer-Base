@@ -79,12 +79,6 @@ ObjectData::SetVertexTexCoord(uint32_t vertexIndex, const glm::vec2& coord)
 }
 
 uint32_t
-ObjectData::GetStride() const
-{
-  return m_Vertices[0].GetStride();
-}
-
-uint32_t
 ObjectData::GetVerticesCount()
 {
   return m_Vertices.size();

@@ -20,7 +20,7 @@ public:
   }
 
   template<class ObjT>
-  bool DestroyObject(Ref<ObjT> obj)
+  void DestroyObject(Ref<ObjT> obj)
   {
     DestroyObjectImpl(obj);
   }

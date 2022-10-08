@@ -60,7 +60,7 @@ struct VertexPosition
   explicit VertexPosition(const glm::vec2& position);
   explicit VertexPosition(const glm::vec3& position);
 
-  glm::vec3 Position{ 1.0f };
+  glm::vec3 Position{};
 };
 
 struct Vertex
@@ -68,16 +68,12 @@ struct Vertex
   Vertex() = default;
   Vertex(const VertexPosition& position);
 
-  STATIC uint32_t GetStride()
-  {
-    return sizeof(Position) + sizeof(Color) + sizeof(TexIndex) +
-           sizeof(TexCoord);
-  }
+  STATIC uint32_t GetStride() { return sizeof(Vertex); }
 
-  STATIC uint32_t PositionOffset() { return 0; }
-  STATIC uint32_t ColorOffset() { return 12; }
-  STATIC uint32_t TexIndexOffset() { return 28; }
-  STATIC uint32_t TexCoordOffset() { return 32; }
+  STATIC uint32_t PositionOffset() { return offsetof(Vertex, Position); }
+  STATIC uint32_t ColorOffset() { return offsetof(Vertex, Color); }
+  STATIC uint32_t TexIndexOffset() { return offsetof(Vertex, TexIndex); }
+  STATIC uint32_t TexCoordOffset() { return offsetof(Vertex, TexCoord); }
 
   VertexPosition Position;
   glm::vec4 Color{ 0.0f };
@@ -104,17 +100,15 @@ struct ObjectData
   void SetVertexTexIndex(uint32_t vertexIndex, uint32_t index);
   void SetVertexTexCoord(uint32_t vertexIndex, const glm::vec2& coord);
 
-  uint32_t GetStride() const;
+  STATIC uint32_t GetStride() { return sizeof(Vertex); }
 
   uint32_t GetVerticesCount();
   uint32_t GetVerticesSize();
-
   Vertex* GetVerticesPointer();
   const Vertex* GetVerticesPointer() const;
 
   uint32_t GetIndicesCount() const;
   uint32_t GetIndicesSize() const;
-
   uint32_t* GetIndicesPointer();
   const uint32_t* GetIndicesPointer() const;
 
