@@ -4,21 +4,15 @@
 
 namespace Alius {
 
+struct RendererSpec;
+
 class Renderer
 {
 public:
   struct ModuleSpec
   {
     // Returns new module on demand
-    std::function<Ref<Renderer>(size_t, size_t, const char*)> Creator;
-
-    // Static assets are only accessed during initialization (program startup)
-    // and are not required during the following runtime
-    std::string StaticAssetLocation;
-
-    // Dynamic assets may be accessed through the whole program lifetime, so
-    // their location should not change from startup until shutdown.
-    std::string DynamicAssetLocation;
+    std::function<Ref<Renderer>(const RendererSpec&)> Creator;
 
     // WIP: Reserved for the future use when we add dynamic module loading
     std::string DynLibName;
@@ -70,6 +64,13 @@ private:
   virtual void CreateObjectImpl(Ref<RendererObjectBase> object) = 0;
 
   virtual void DestroyObjectImpl(Ref<RendererObjectBase> object) = 0;
+};
+
+struct RendererSpec
+{
+  size_t Width = 1024;
+  size_t Height = 768;
+  const char* Title = "New AlsVkWindow";
 };
 
 }
