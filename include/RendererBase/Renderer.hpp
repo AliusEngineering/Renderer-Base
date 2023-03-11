@@ -12,15 +12,15 @@ public:
   struct ModuleSpec
   {
     // Returns new module on demand
-    std::function<Ref<Renderer>(const RendererSpec&)> Creator;
+    std::function<Ref<Renderer>(const WindowSpec&)> Construct;
 
     // WIP: Reserved for the future use when we add dynamic module loading
-    std::string DynLibName;
+    const char* DynLibName;
   };
 
   virtual ~Renderer() = default;
 
-  virtual Ref<Window> GetWindow() const = 0;
+  [[nodiscard]] virtual Ref<Window> GetWindow() const = 0;
 
   template<class ObjT, class ObjDataT>
   Ref<ObjT> CreateObject(const ObjDataT& objectData)
@@ -48,11 +48,10 @@ public:
    * @tparam key Your module identifier.
    * @tparam value Function that returns a shared_ptr of your module. (return
    * type should be shared_ptr<Renderer>). Is of type
-   * std::function<std::shared_ptr<Renderer>(size_t, size_t, const char*)>.
-   * Should accept size_t width, size_t height and const char* title for
-   * underlying window creation.
+   * std::function<std::shared_ptr<Renderer>(const WindowSpec&)>.
+   * Should accept WindowSpec struct for underlying window creation.
    */
-  inline static std::unordered_map<std::string, ModuleSpec> s_RendererModules{};
+  inline static std::unordered_map<const char*, ModuleSpec> s_RendererModules{};
 
 private:
   /*
@@ -64,13 +63,6 @@ private:
   virtual void CreateObjectImpl(Ref<RendererObjectBase> object) = 0;
 
   virtual void DestroyObjectImpl(Ref<RendererObjectBase> object) = 0;
-};
-
-struct RendererSpec
-{
-  size_t Width = 1024;
-  size_t Height = 768;
-  const char* Title = "New AlsVkWindow";
 };
 
 }

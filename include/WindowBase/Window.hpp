@@ -18,4 +18,10 @@ public:
   virtual void OnUpdate() = 0;
 };
 
+struct WindowSpec {
+  const char *Title;
+  int Width;
+  int Height;
+};
+
 }

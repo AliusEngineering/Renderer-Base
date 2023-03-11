@@ -1,4 +1,4 @@
-#include "Triangle.hpp"
+#include "RendererBase/Objects/Triangle.hpp"
 
 namespace Alius {
 

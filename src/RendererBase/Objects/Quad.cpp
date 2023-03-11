@@ -1,4 +1,4 @@
-#include "Quad.hpp"
+#include "RendererBase/Objects/Quad.hpp"
 
 namespace Alius {
 
